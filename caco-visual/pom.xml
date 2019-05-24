@@ -11,5 +11,8 @@
 
     <artifactId>caco-visual</artifactId>
 
-
+    <modules>
+        <module>caco-monitor</module>
+        <module>caco-zikpin</module>
+    </modules>
 </project>

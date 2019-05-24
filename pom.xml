@@ -10,7 +10,7 @@
     <modules>
         <module>caco-auth</module>
         <module>caco-eureka</module>
-        <module>caco-framework</module>
+        <module>caco-plugins</module>
         <module>caco-gateway</module>
         <module>caco-generator</module>
         <module>caco-nacos</module>
@@ -149,7 +149,16 @@
                 <artifactId>springfox-bean-validators</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-zuul</artifactId>
+                <version>1.4.6.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>4.5.10</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
