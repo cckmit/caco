@@ -9,7 +9,6 @@
  */
 package io.uoko.caco.gateway.config.swagger;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -25,7 +24,6 @@ import org.springframework.context.annotation.Primary;
  * created by 2019/5/24
  */
 @Configuration
-@EnableConfigurationProperties(RegistrySwaggerResourcesProvider.class)
 public class SwaggerAutoConfiguration {
 
     @Primary
