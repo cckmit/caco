@@ -17,6 +17,7 @@
         <module>caco-nacos</module>
         <module>caco-visual</module>
         <module>caco-common</module>
+        <module>caco-modules</module>
     </modules>
     <packaging>pom</packaging>
     <name>caco</name>

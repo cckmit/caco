@@ -37,7 +37,7 @@ import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurity
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Autowired
-    private FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
+    private FilterIgnoreProperties filterIgnoreProperties;
     @Autowired
     private OAuth2WebSecurityExpressionHandler expressionHandler;
     @Autowired
@@ -61,7 +61,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>
                 .ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests();
-        filterIgnorePropertiesConfig.getUrls()
+        filterIgnoreProperties.getUrls()
                 .forEach(url -> registry.antMatchers(url).permitAll());
         registry.anyRequest().authenticated()
                 .and().csrf().disable();
