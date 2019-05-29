@@ -1,5 +1,8 @@
 package io.uoko.caco.gateway.config.oauth2;
 
+import com.alibaba.fastjson.JSONObject;
+import io.uoko.caco.common.core.domain.enums.ResultCode;
+import io.uoko.caco.common.core.result.PlatformResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.http.entity.ContentType;
@@ -44,10 +47,9 @@ public class UokoAccessDeniedHandler extends OAuth2AccessDeniedHandler {
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
         response.setCharacterEncoding(CharEncoding.UTF_8);
-        // TODO: 2019/5/27 返回体需要改照
-//        response.getWriter().write(String.valueOf(
-//                JSONObject.toJSON(PlatformResult.failure(ResultCode.PERMISSION_NO_ACCESS)))
-//        );
+        response.getWriter().write(String.valueOf(
+                JSONObject.toJSON(PlatformResult.failure(ResultCode.PERMISSION_NO_ACCESS)))
+        );
         response.flushBuffer();
     }
 }
