@@ -1,0 +1,30 @@
+server:
+  port: 4000
+spring:
+  application:
+    name: caco-auth
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://192.168.200.28:3306/uk_arch_auth?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: ZiHeng@uoko2018
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      read-only: false
+      connection-timeout: 30000
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      maximum-pool-size: 60
+      minimum-idle: 30
+      auto-commit: true
+      pool-name: DatebookHikariCP
+      connection-test-query: SELECT 1
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://caco:caco123@127.0.0.1:3000/eureka/

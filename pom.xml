@@ -59,7 +59,7 @@
         <platform-bom.version>Cairo-SR7</platform-bom.version>
         <spring-cloud-dependencies.version>Greenwich.RELEASE</spring-cloud-dependencies.version>
         <fastjson.version>1.2.58</fastjson.version>
-        <mybatis-plus-boot-starter.version>3.1.0</mybatis-plus-boot-starter.version>
+        <mybatis-plus.version>3.1.1</mybatis-plus.version>
         <transmittable-thread-local.version>2.10.2</transmittable-thread-local.version>
         <alibaba.druid.version>1.1.16</alibaba.druid.version>
         <swagger.version>2.9.2</swagger.version>
@@ -144,12 +144,6 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!--mybatis plus orm-->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus-boot-starter.version}</version>
-            </dependency>
             <!--alibaba thread local-->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -214,6 +208,12 @@
                 <groupId>io.uoko.caco</groupId>
                 <artifactId>caco-common-core</artifactId>
                 <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <!--mybatis-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
