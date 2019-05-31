@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018-2019. uoko.io All Rights Reserved.
  * 项目名称：UOKO 系统
- * 类名称：Constants
+ * 类名称：CommonConstants
  * 创建人：绍华(for dingtalk)
  * 联系方式：uokoer@gmail.com
  * 创建时间：2019/5/29
@@ -19,7 +19,7 @@ package io.uoko.caco.common.core.constant;
  * Website https://uoko.io
  * created by 2019/5/29
  */
-public interface Constants {
+public interface CommonConstants {
     /**
      * ttl 存储用户userId 的key
      */
@@ -37,4 +37,9 @@ public interface Constants {
      * token分割符
      */
     String TOKEN_SPLIT = "Bearer ";
+
+    /**
+     * 失败标记
+     */
+    Integer FAIL = 1;
 }

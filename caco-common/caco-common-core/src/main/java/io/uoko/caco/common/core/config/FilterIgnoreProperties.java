@@ -7,7 +7,7 @@
  * 创建时间：2019/5/29
  * 项目官网: https://uoko.io
  */
-package io.uoko.caco.auth.biz.config;
+package io.uoko.caco.common.core.config;
 
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

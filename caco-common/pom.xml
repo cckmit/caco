@@ -7,10 +7,12 @@
         <groupId>io.uoko.caco</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <groupId>io.uoko.caco.common</groupId>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
         <module>caco-common-core</module>
+        <module>caco-common-security</module>
     </modules>
     <artifactId>caco-common</artifactId>
 

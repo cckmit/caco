@@ -10,7 +10,10 @@
 package io.uoko.caco.auth.biz.config;
 
 import io.uoko.caco.auth.biz.constant.SecurityConstants;
+import io.uoko.caco.auth.biz.service.ClientDetailsService;
 import io.uoko.caco.auth.biz.service.UserDetailsImpl;
+import io.uoko.caco.common.security.component.CacoWebResponseExceptionTranslator;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,15 +21,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -51,6 +51,7 @@ import java.util.Map;
 @Order(Integer.MIN_VALUE)
 @Configuration
 @EnableAuthorizationServer
+@AllArgsConstructor
 public class AuthorizationConfiguration extends AuthorizationServerConfigurerAdapter {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -64,9 +65,9 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+        ClientDetailsService clientDetailsService = new ClientDetailsService(dataSource);
         //从mysql查询
-        clientDetailsService.setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
+        clientDetailsService.setDeleteClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
         clientDetailsService.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
         clients.withClientDetails(clientDetailsService);
     }
@@ -93,8 +94,8 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
                 .authenticationManager(authenticationManager)
                 .reuseRefreshTokens(false)
                 .accessTokenConverter(jwtAccessTokenConverter())
-                .userDetailsService(userDetailsService);
-
+                .userDetailsService(userDetailsService)
+                .exceptionTranslator(new CacoWebResponseExceptionTranslator());
     }
 
     /**
@@ -108,13 +109,15 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
     @Bean
     public TokenStore redisTokenStore() {
         //https://github.com/spring-projects/spring-security-oauth/issues/1230#event-1352041281 自动存储
-        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
-        redisTokenStore.setPrefix(SecurityConstants.TOKEN_REDIS_PREFIX);
-        return redisTokenStore;
+//        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+//        redisTokenStore.setPrefix(SecurityConstants.TOKEN_REDIS_PREFIX);
+//        return redisTokenStore;
 //        UokoRedisTokenStore tokenStore = new UokoRedisTokenStore();
 //        tokenStore.setRedisTemplate(redisTemplate);
 //        return tokenStore;
-
+        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
+        tokenStore.setPrefix(SecurityConstants.PROJECT_PREFIX + SecurityConstants.OAUTH_PREFIX);
+        return tokenStore;
     }
 
     /**
@@ -128,11 +131,6 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
                 new UokoJwtAccessTokenConverter();
         jwtAccessTokenConverter.setSigningKey(SecurityConstants.SIGN_KEY);
         return jwtAccessTokenConverter;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 

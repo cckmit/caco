@@ -12,7 +12,7 @@ package io.uoko.caco.common.core.util;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.uoko.caco.common.core.constant.Constants;
+import io.uoko.caco.common.core.constant.CommonConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.MDC;
@@ -41,7 +41,7 @@ public class UserUtils {
      */
     public static List<String> getRole(HttpServletRequest httpServletRequest) throws RuntimeException {
         String token = getToken(httpServletRequest);
-        String key = Base64.getEncoder().encodeToString(Constants.SIGN_KEY.getBytes());
+        String key = Base64.getEncoder().encodeToString(CommonConstants.SIGN_KEY.getBytes());
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         List<String> roleNames = (List<String>) claims.get("authorities");
         return roleNames;
@@ -55,7 +55,7 @@ public class UserUtils {
      */
     public static String getUserId(HttpServletRequest httpServletRequest) throws RuntimeException {
         String token = getToken(httpServletRequest);
-        String key = Base64.getEncoder().encodeToString(Constants.SIGN_KEY.getBytes());
+        String key = Base64.getEncoder().encodeToString(CommonConstants.SIGN_KEY.getBytes());
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         return (String) claims.get("userId");
     }
@@ -68,7 +68,7 @@ public class UserUtils {
      */
     public static String getAuthId(HttpServletRequest httpServletRequest) throws RuntimeException {
         String token = getToken(httpServletRequest);
-        String key = Base64.getEncoder().encodeToString(Constants.SIGN_KEY.getBytes());
+        String key = Base64.getEncoder().encodeToString(CommonConstants.SIGN_KEY.getBytes());
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         return (String) claims.get("authId");
     }
@@ -81,7 +81,7 @@ public class UserUtils {
      */
     public static String getIdentifier(HttpServletRequest httpServletRequest) throws RuntimeException {
         String token = getToken(httpServletRequest);
-        String key = Base64.getEncoder().encodeToString(Constants.SIGN_KEY.getBytes());
+        String key = Base64.getEncoder().encodeToString(CommonConstants.SIGN_KEY.getBytes());
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         return (String) claims.get("identifier");
     }
@@ -93,8 +93,8 @@ public class UserUtils {
      * @return token
      */
     public static String getToken(HttpServletRequest httpServletRequest) throws RuntimeException {
-        String authorization = httpServletRequest.getHeader(Constants.REQ_HEADER);
-        return StringUtils.substringAfter(authorization, Constants.TOKEN_SPLIT);
+        String authorization = httpServletRequest.getHeader(CommonConstants.REQ_HEADER);
+        return StringUtils.substringAfter(authorization, CommonConstants.TOKEN_SPLIT);
     }
 
     /**
@@ -104,7 +104,7 @@ public class UserUtils {
      */
     public static void setUser(String userId) throws RuntimeException {
         THREAD_LOCAL_USER.set(userId);
-        MDC.put(Constants.KEY_USER, userId);
+        MDC.put(CommonConstants.KEY_USER, userId);
     }
 
     /**
@@ -126,6 +126,6 @@ public class UserUtils {
      */
     public static void clearAllUserInfo() throws RuntimeException {
         THREAD_LOCAL_USER.remove();
-        MDC.remove(Constants.KEY_USER);
+        MDC.remove(CommonConstants.KEY_USER);
     }
 }

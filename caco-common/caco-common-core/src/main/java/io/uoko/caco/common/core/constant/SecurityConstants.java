@@ -7,7 +7,7 @@
  * 创建时间：2019/5/29
  * 项目官网: https://uoko.io
  */
-package io.uoko.caco.auth.biz.constant;
+package io.uoko.caco.common.core.constant;
 
 /**
  * <p>
@@ -139,5 +139,14 @@ public interface SecurityConstants {
      */
     String BASIC_ = "Basic ";
 
+    /**
+     * CLIENT key
+     */
     String CLIENT_DETAILS_KEY = PROJECT_PREFIX + OAUTH_PREFIX + "client:details";
+
+
+    /***
+     * 资源服务器默认bean名称
+     */
+    String RESOURCE_SERVER_CONFIGURER = "resourceServerConfigurerAdapter";
 }

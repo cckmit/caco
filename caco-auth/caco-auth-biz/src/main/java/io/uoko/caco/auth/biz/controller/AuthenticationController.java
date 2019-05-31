@@ -9,13 +9,18 @@
  */
 package io.uoko.caco.auth.biz.controller;
 
+import cn.hutool.core.util.StrUtil;
+import io.uoko.caco.common.core.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -31,8 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("token")
 public class AuthenticationController {
     @Autowired
-    @Qualifier("consumerTokenServices")
-    private ConsumerTokenServices consumerTokenServices;
+    private TokenStore tokenStore;
 
     /**
      * 清除缓存
@@ -42,6 +46,14 @@ public class AuthenticationController {
      */
     @DeleteMapping("token/{accessToken}")
     public Boolean removeToken(@PathVariable("accessToken") String accessToken) {
-        return consumerTokenServices.revokeToken(accessToken);
+        OAuth2AccessToken auth2AccessToken = tokenStore.readAccessToken(accessToken);
+        if (auth2AccessToken == null || StrUtil.isBlank(auth2AccessToken.getValue())) {
+            throw new BusinessException("退出失败，token 无效");
+        }
+        tokenStore.removeAccessToken(auth2AccessToken);
+
+        OAuth2RefreshToken oAuth2RefreshToken = auth2AccessToken.getRefreshToken();
+        tokenStore.removeRefreshToken(oAuth2RefreshToken);
+        return new AtomicBoolean(true).get();
     }
 }

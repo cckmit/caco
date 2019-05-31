@@ -11,7 +11,7 @@ package io.uoko.caco.common.core.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import io.uoko.caco.common.core.constant.Constants;
+import io.uoko.caco.common.core.constant.CommonConstants;
 import io.uoko.caco.common.core.util.IPUtils;
 import io.uoko.caco.common.core.util.UserUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -56,10 +56,10 @@ public class ControllerAop {
     public Object apiLog(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //2019/3/19 获取用户user对象，设置到UserUtil中
-        String token = request.getHeader(Constants.REQ_HEADER);
+        String token = request.getHeader(CommonConstants.REQ_HEADER);
         String userId = null;
         if (!StringUtils.isBlank(token) &&
-                Constants.TOKEN_SPLIT.equals(token.substring(0, Constants.TOKEN_SPLIT.length()))) {
+                CommonConstants.TOKEN_SPLIT.equals(token.substring(0, CommonConstants.TOKEN_SPLIT.length()))) {
             userId = UserUtils.getUserId(request);
             if (userId != null) {
                 UserUtils.setUser(userId);
