@@ -58,7 +58,7 @@
         <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
         <platform-bom.version>Cairo-SR7</platform-bom.version>
         <spring-cloud-dependencies.version>Greenwich.RELEASE</spring-cloud-dependencies.version>
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <mybatis-plus.version>3.1.1</mybatis-plus.version>
         <transmittable-thread-local.version>2.10.2</transmittable-thread-local.version>
         <alibaba.druid.version>1.1.16</alibaba.druid.version>
